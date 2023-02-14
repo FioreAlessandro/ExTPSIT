@@ -20,23 +20,24 @@ struct Segmento {
 
 double lunghezzaSegmento(double x1, double y1, double x2, double y2) 
 {
-    double dx = x2 - x1;
-    double dy = y2 - y1;
-    return sqrt(dx*dx + dy*dy);
+    return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
 int main()
 {
-    //generare dai 15 ai 30 segmenti con 4 coordinate per segmento(x1,y1  x2,y2)
+    
+    //input numero atleti partecipanti
     srand(time(NULL));
-    int numero_atleti = rand()%8+2;
-    cout << "Ci sono in totale: "<<numero_atleti<<" atleti"<<endl;
+    cout << "Quanti atleti ci sono in totale? "<<endl;
+    int numero_atleti;
+    cin>>numero_atleti;
+    //generare dai 15 ai 30 segmenti con 4 coordinate per segmento(x1,y1  x2,y2)
     int numero_linee=rand()%16+15;
-    int numero_linee_tot = numero_atleti*numero_linee;
     int x1,y1,x2,y2;
     double km_tot=0;
-  
+   //creo vettore per la distanza e struct 
     Segmento segmenti[numero_linee];
+    double distanza[numero_atleti];
     for(int a=0;a<numero_atleti;a++)
     {
         cout <<endl<<a+1<<"° Atleta"<<endl;
@@ -50,21 +51,28 @@ int main()
             segmenti[i].km = lunghezzaSegmento(segmenti[i].x1, segmenti[i].y1, segmenti[i].x2, segmenti[i].y2);
             km_tot = km_tot + segmenti[i].km;
             cout<<"Lunghezza totale "<<i+1<<"° linea "<< segmenti[i].km << endl;
-            
         }
         cout <<endl<<"KM totali percorsi dal "<<a+1<<"° Atleta, sono: "<<km_tot<<endl;
-        
-        cout <<endl<<"KM totali percorsi dal "<<a+1<<"° Atleta, sono: "<<km_tot<<endl;
-        
-        cout <<endl<<"KM totali percorsi dal "<<a+1<<"° Atleta, sono: "<<km_tot<<endl;
+        distanza[a]=km_tot;
     }
     
+    //ordinamento del vettore
+    for (int i = 0; i < numero_atleti-1; i++) {
+        for (int j = 0; j < numero_atleti-i-1; j++) {
+            if (distanza[j] > distanza[j+1]) 
+            {
+                int temp = distanza[j];
+                distanza[j] = distanza[j+1];
+                distanza[j+1] = temp;
+            }
+        }
+    }
     
-    
-    
-    
-    
-    
+    for (int i = 0; i < numero_atleti; i++) 
+    {
+       cout<<distanza[i]<<" ";
+    }
+ 
     
     return 0;
 }
