@@ -53,6 +53,10 @@ int main()
             
         }
         cout <<endl<<"KM totali percorsi dal "<<a+1<<"° Atleta, sono: "<<km_tot<<endl;
+        
+        cout <<endl<<"KM totali percorsi dal "<<a+1<<"° Atleta, sono: "<<km_tot<<endl;
+        
+        cout <<endl<<"KM totali percorsi dal "<<a+1<<"° Atleta, sono: "<<km_tot<<endl;
     }
     
     
