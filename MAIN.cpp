@@ -10,12 +10,20 @@
 #include <iostream>
 #include <ctime>
 #include<cmath>
+#include <fstream>
 
 using namespace std;
 
 struct Segmento {
     double x1, y1, x2, y2;
     double km;
+};
+
+struct Atleti {
+    int numero_atleti;
+    string matricola;
+    string cognome;
+    int km_tot;
 };
 
 double lunghezzaSegmento(double x1, double y1, double x2, double y2) 
