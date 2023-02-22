@@ -44,7 +44,7 @@ int main()
     double distanza[atleta.numero_atleti];
     for(int a=0;a<atleta.numero_atleti;a++)
     {
-        int numero_linee=rand()%21+10;
+        int numero_linee=rand()%26+5;
         int x1,y1,x2,y2,z;
         double km_tot=0;
    //creo vettore per la distanza e struct 
