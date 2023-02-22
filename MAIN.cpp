@@ -41,21 +41,21 @@ int main()
     cin>>atleta.numero_atleti;
     fout<<endl<<endl<<"Numero atleti: "<<atleta.numero_atleti<<endl<<endl;
     //generare dai 15 ai 30 segmenti con 4 coordinate per segmento(x1,y1  x2,y2)
-    int numero_linee=rand()%16+15;
-    int x1,y1,x2,y2,z;
-    double km_tot=0;
-   //creo vettore per la distanza e struct 
-    Segmento segmenti[numero_linee];
-    
     double distanza[atleta.numero_atleti];
     for(int a=0;a<atleta.numero_atleti;a++)
     {
+        int numero_linee=rand()%21+10;
+        int x1,y1,x2,y2,z;
+        double km_tot=0;
+   //creo vettore per la distanza e struct 
+        Segmento segmenti[numero_linee];
         atleta.matricola = (char) ((rand() % 26)+ 65);
         fout<<"Matricola: "<<atleta.matricola<<endl;
         cout <<endl<<a+1<<"° Atleta"<<endl;
         cout <<"Inserisci cognome atleta: ";
         cin>>atleta.cognome;
         fout<<"Cognome: "<<atleta.cognome<<endl;
+        fout<<"Coordinate rilevate in 30 minuti di gara\n";
         atleta.km_tot=0;
         for (int i = 0; i < numero_linee; i++) 
         {
@@ -63,13 +63,13 @@ int main()
             segmenti[i].y1 = rand() % 100;
             segmenti[i].x2 = rand() % 100;
             segmenti[i].y2 = rand() % 100;
+            fout<<segmenti[i].x1<<" "<<segmenti[i].y1<<" "<<segmenti[i].x2<<" "<<segmenti[i].y2<<"\n";
             segmenti[i].km = lunghezzaSegmento(segmenti[i].x1, segmenti[i].y1, segmenti[i].x2, segmenti[i].y2);
             atleta.km_tot = atleta.km_tot + segmenti[i].km;
             cout<<"Lunghezza totale "<<i+1<<"° linea "<< segmenti[i].km << endl;
         }
         cout <<endl<<"KM totali percorsi dal "<<a+1<<"° Atleta ("<<atleta.cognome<<"), sono: "<<atleta.km_tot<<endl;
         fout<<"KM totali:"<<atleta.km_tot<<endl<<endl;
-        
         distanza[a]=atleta.km_tot;
     }
     
@@ -87,9 +87,13 @@ int main()
     }
     
     cout <<endl<<"I km percorsi in ordine crescente dagli altleti sono: "<<endl;
+    fout<<"CLASSIFICA FINALE \n";
+    int p=atleta.numero_atleti;
     for (int i = 0; i < atleta.numero_atleti; i++) 
     {
        cout<<distanza[i]<<" ";
+       fout<<p<<"° posto: "<<distanza[i]<<"\n";
+       p--;
        atleta.km_tot = distanza[i];
     }
     
