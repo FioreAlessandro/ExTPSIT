@@ -61,11 +61,12 @@ double lunghezzaSegmento(double x1, double y1, double x2, double y2)
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
-int main()
+void esegui()
 {
     fstream fout("prova",ios::app);
     
     srand(time(NULL));
+    
     cout << "Quanti atleti ci sono in totale? "<<endl;
     Atleti atleta;
     cin>>atleta.numero_atleti;
@@ -73,6 +74,7 @@ int main()
     
     string matricola;
     double distanza[atleta.numero_atleti];
+    
     for(int a=0;a<atleta.numero_atleti;a++)
     {
         int numero_linee=rand()%26+5;
@@ -91,10 +93,12 @@ int main()
         atleta.matricola = matricola;
         matricola = " ";
         fout<<"Matricola: "<<atleta.matricola<<endl;
+        
         cout <<endl<<a+1<<"° Atleta"<<endl;
         cout <<"Inserisci cognome atleta: ";
         cin>>atleta.cognome;
         fout<<"Cognome: "<<atleta.cognome<<endl;
+        
         fout<<"Coordinate rilevate in 30 minuti di gara\n";
         atleta.km_tot=0;
         for (int i = 0; i < numero_linee; i++) 
@@ -106,14 +110,12 @@ int main()
             fout<<segmenti[i].x1<<" "<<segmenti[i].y1<<" "<<segmenti[i].x2<<" "<<segmenti[i].y2<<"\n";
             segmenti[i].km = lunghezzaSegmento(segmenti[i].x1, segmenti[i].y1, segmenti[i].x2, segmenti[i].y2);
             atleta.km_tot = atleta.km_tot + segmenti[i].km;
-            cout<<"Lunghezza totale "<<i+1<<"° linea "<< segmenti[i].km << endl;
+            //cout<<"Lunghezza totale "<<i+1<<"° linea "<< segmenti[i].km << endl;
         }
-        cout <<endl<<"KM totali percorsi dal "<<a+1<<"° Atleta ("<<atleta.cognome<<"), sono: "<<atleta.km_tot<<endl;
+        //cout <<endl<<"KM totali percorsi dal "<<a+1<<"° Atleta ("<<atleta.cognome<<"), sono: "<<atleta.km_tot<<endl;
         fout<<"KM totali:"<<atleta.km_tot<<endl<<endl;
         distanza[a]=atleta.km_tot;
     }
-   
-   
    
     for (int i = 0; i < atleta.numero_atleti-1; i++) {
         for (int j = 0; j < atleta.numero_atleti-i-1; j++) {
@@ -126,12 +128,10 @@ int main()
         }
     }
     
-    cout <<endl<<"I km percorsi in ordine crescente dagli altleti sono: "<<endl;
     fout<<"CLASSIFICA FINALE \n";
     int p=atleta.numero_atleti;
     for (int i = 0; i < atleta.numero_atleti; i++) 
     {
-       cout<<distanza[i]<<" ";
        fout<<p<<"° posto: "<<distanza[i]<<"\n";
        p--;
        atleta.km_tot = distanza[i];
@@ -141,6 +141,67 @@ int main()
     
     fout.close();
  
-    
-    return 0;
 }
+
+void pulisci()
+{
+    ofstream file("prova");
+   if (file.is_open()) {
+      file.clear();
+      file.close();}
+      cout<<"File pulito \n ";
+}
+
+void leggi()
+{
+    ifstream file("prova");
+    string linea;
+    if (file.is_open()) {
+        while (getline(file, linea)) {
+            cout << linea << endl;
+        }
+        file.close();
+    } else {
+        cout << "Impossibile aprire il file "<<endl;
+    }
+}
+
+void menu()
+{
+    int scelta;
+    do{
+        cout<<"\n-----MENU-----\n";
+        cout<<"1)Inserisci dati atleti\n";
+        cout<<"2)Leggi file\n";
+        cout<<"3)Pulisci file\n";
+        cout<<"4)Esci\n";
+        cin>>scelta;
+        switch(scelta)
+        {
+            case 1:
+            esegui();
+            break;
+            
+            case 2:
+            leggi();
+            break;
+            
+            case 3:
+            pulisci();
+            break;
+            
+            //default:
+            //pulisci();
+            
+        }
+    }while(scelta!=4);
+}
+
+
+int main()
+{
+    menu();
+    
+	return 0;
+}
+
