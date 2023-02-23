@@ -7,6 +7,14 @@
     (Le coordinate vanno generate tenendo conto di un piano cartesiano da 0,0 a 100,100)
 */
 
+/**
+
+@file main.cpp
+@brief Simula una gara di atletica leggera calcolando i km percorsi da ogni atleta e salvando i risultati su file
+@author [Alessandro Fiore]
+
+*/
+
 #include <iostream>
 #include <ctime>
 #include<cmath>
@@ -14,17 +22,39 @@
 
 using namespace std;
 
+/**
+
+@struct Segmento
+@brief Definisce una struttura Segmento contenente le coordinate di due punti e la loro lunghezza in km
+*/
+
 struct Segmento {
     double x1, y1, x2, y2;
     double km;
 };
 
+/**
+
+@struct Atleti
+@brief Definisce una struttura Atleti contenente il numero degli atleti, la loro matricola, il cognome e i km percorsi
+*/
+
 struct Atleti {
     int numero_atleti;
-    char matricola;
+    string matricola;
     string cognome;
     int km_tot;
 };
+
+/**
+
+@brief Calcola la lunghezza di un segmento dati i suoi punti
+@param x1 Ascissa del primo punto
+@param y1 Ordinata del primo punto
+@param x2 Ascissa del secondo punto
+@param y2 Ordinata del secondo punto
+@return Lunghezza del segmento in km
+*/
 
 double lunghezzaSegmento(double x1, double y1, double x2, double y2) 
 {
@@ -34,22 +64,32 @@ double lunghezzaSegmento(double x1, double y1, double x2, double y2)
 int main()
 {
     fstream fout("prova",ios::app);
-    //input numero atleti partecipanti
+    
     srand(time(NULL));
     cout << "Quanti atleti ci sono in totale? "<<endl;
     Atleti atleta;
     cin>>atleta.numero_atleti;
     fout<<endl<<endl<<"Numero atleti: "<<atleta.numero_atleti<<endl<<endl;
-    //generare dai 15 ai 30 segmenti con 4 coordinate per segmento(x1,y1  x2,y2)
+    
+    string matricola;
     double distanza[atleta.numero_atleti];
     for(int a=0;a<atleta.numero_atleti;a++)
     {
         int numero_linee=rand()%26+5;
         int x1,y1,x2,y2,z;
         double km_tot=0;
-   //creo vettore per la distanza e struct 
+   
         Segmento segmenti[numero_linee];
-        atleta.matricola = (char) ((rand() % 26)+ 65);
+        
+        for(int aa=0;aa<5;aa++)
+        {
+            int num = rand() % 26; 
+            char carattere = 'a' + num;
+            matricola+=carattere;
+        }
+        
+        atleta.matricola = matricola;
+        matricola = " ";
         fout<<"Matricola: "<<atleta.matricola<<endl;
         cout <<endl<<a+1<<"° Atleta"<<endl;
         cout <<"Inserisci cognome atleta: ";
@@ -72,9 +112,9 @@ int main()
         fout<<"KM totali:"<<atleta.km_tot<<endl<<endl;
         distanza[a]=atleta.km_tot;
     }
-    
-    
-    //ordinamento del vettore
+   
+   
+   
     for (int i = 0; i < atleta.numero_atleti-1; i++) {
         for (int j = 0; j < atleta.numero_atleti-i-1; j++) {
             if (distanza[j] > distanza[j+1]) 
