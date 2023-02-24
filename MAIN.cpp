@@ -7,12 +7,13 @@
     (Le coordinate vanno generate tenendo conto di un piano cartesiano da 0,0 a 100,100)
 */
 
-/**
+/*!
 
-@file main.cpp
-@brief Simula una gara di atletica leggera calcolando i km percorsi da ogni atleta e salvando i risultati su file
-@author [Alessandro Fiore]
-
+\file Gara_Kyte-snowborder.cpp
+\brief Programma che simula una gara di Kayt-Snowbording calcolando i km percorsi da ogni atleta e salvando i risultati su file
+\author [Alessandro Fiore]
+\version 1.0
+\date 24/02/2023
 */
 
 #include <iostream>
@@ -46,14 +47,14 @@ struct Atleti {
     int km_tot;
 };
 
-/**
+/*!
 
-@brief Calcola la lunghezza di un segmento dati i suoi punti
-@param x1 Ascissa del primo punto
-@param y1 Ordinata del primo punto
-@param x2 Ascissa del secondo punto
-@param y2 Ordinata del secondo punto
-@return Lunghezza del segmento in km
+\brief Calcola la lunghezza di un segmento dati i suoi punti
+\param[in] x1 Ascissa del primo punto
+\param[in] y1 Ordinata del primo punto
+\param[in] x2 Ascissa del secondo punto
+\param[in] y2 Ordinata del secondo punto
+\return Lunghezza del segmento 
 */
 
 double lunghezzaSegmento(double x1, double y1, double x2, double y2) 
@@ -61,28 +62,34 @@ double lunghezzaSegmento(double x1, double y1, double x2, double y2)
     return sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
 }
 
+/*!
+
+\fn esegui
+\brief Apre il file in scrittura e inserisce all'interno di esso i km e i vari dati degli atleti, inclusa la classifica finale
+ */
+
 void esegui()
 {
     fstream fout("prova",ios::app);
     
     srand(time(NULL));
     
-    cout << "Quanti atleti ci sono in totale? "<<endl;
     Atleti atleta;
-    cin>>atleta.numero_atleti;
-    fout<<endl<<endl<<"Numero atleti: "<<atleta.numero_atleti<<endl<<endl;
     
     string matricola;
+    
     double distanza[atleta.numero_atleti];
     
+    cout << "Quanti atleti ci sono in totale? "<<endl;
+    cin>>atleta.numero_atleti;
+    fout<<endl<<endl<<"Numero atleti: "<<atleta.numero_atleti<<endl<<endl;
+   
     for(int a=0;a<atleta.numero_atleti;a++)
     {
         int numero_linee=rand()%26+5;
         int x1,y1,x2,y2,z;
         double km_tot=0;
-   
         Segmento segmenti[numero_linee];
-        
         for(int aa=0;aa<5;aa++)
         {
             int num = rand() % 26; 
@@ -101,6 +108,7 @@ void esegui()
         
         fout<<"Coordinate rilevate in 30 minuti di gara\n";
         atleta.km_tot=0;
+       
         for (int i = 0; i < numero_linee; i++) 
         {
             segmenti[i].x1 = rand() % 100;
@@ -110,9 +118,7 @@ void esegui()
             fout<<segmenti[i].x1<<" "<<segmenti[i].y1<<" "<<segmenti[i].x2<<" "<<segmenti[i].y2<<"\n";
             segmenti[i].km = lunghezzaSegmento(segmenti[i].x1, segmenti[i].y1, segmenti[i].x2, segmenti[i].y2);
             atleta.km_tot = atleta.km_tot + segmenti[i].km;
-            //cout<<"Lunghezza totale "<<i+1<<"° linea "<< segmenti[i].km << endl;
         }
-        //cout <<endl<<"KM totali percorsi dal "<<a+1<<"° Atleta ("<<atleta.cognome<<"), sono: "<<atleta.km_tot<<endl;
         fout<<"KM totali:"<<atleta.km_tot<<endl<<endl;
         distanza[a]=atleta.km_tot;
     }
@@ -121,6 +127,7 @@ void esegui()
         for (int j = 0; j < atleta.numero_atleti-i-1; j++) {
             if (distanza[j] > distanza[j+1]) 
             {
+              
                 int temp = distanza[j];
                 distanza[j] = distanza[j+1];
                 distanza[j+1] = temp;
@@ -129,6 +136,7 @@ void esegui()
     }
     
     fout<<"CLASSIFICA FINALE \n";
+    
     int p=atleta.numero_atleti;
     for (int i = 0; i < atleta.numero_atleti; i++) 
     {
@@ -143,18 +151,32 @@ void esegui()
  
 }
 
+/*!
+\fn pulisci
+ \brief Pulisce il file riportandolo allo stato iniziale
+ */
+
 void pulisci()
 {
     ofstream file("prova");
-   if (file.is_open()) {
-      file.clear();
-      file.close();}
-      cout<<"File pulito \n ";
+    if (file.is_open()) 
+    {
+        file.clear();
+        file.close();
+    }
+    cout<<"File pulito \n ";
 }
+
+/*!
+\fn leggi
+ \brief Legge il file 
+ */
 
 void leggi()
 {
+     
     ifstream file("prova");
+     
     string linea;
     if (file.is_open()) {
         while (getline(file, linea)) {
@@ -166,6 +188,11 @@ void leggi()
     }
 }
 
+/*!
+ \fn menu
+ \brief Richiama i metodi del programma e offre 4 diverse scelte all'utente 
+ */
+
 void menu()
 {
     int scelta;
@@ -176,6 +203,7 @@ void menu()
         cout<<"3)Pulisci file\n";
         cout<<"4)Esci\n";
         cin>>scelta;
+
         switch(scelta)
         {
             case 1:
@@ -197,7 +225,8 @@ void menu()
     }while(scelta!=4);
 }
 
-
+//! \fn main 
+//! \brief metodo finale in cui viene richiamato solo il menu
 int main()
 {
     menu();
