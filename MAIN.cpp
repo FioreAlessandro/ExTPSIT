@@ -64,13 +64,77 @@ double lunghezzaSegmento(double x1, double y1, double x2, double y2)
 
 /*!
 
-\fn esegui
-\brief Apre il file in scrittura e inserisce all'interno di esso i km e i vari dati degli atleti, inclusa la classifica finale
+\fn carica_vet
+\brief Apre il file in lettura, lo legge fino alla fine e inserisce all'interno di un vettore di struct tutto ciò che legge dal file
+\param[in]  vet_at vettore della struct Atleti
+ */
+ 
+void carica_vet(Atleti vet_at[])
+{
+    ifstream fin("partecipanti.txt",ios::in);
+    string appoggio;
+    while(!fin.eof())
+    {
+        getline(fin,appoggio);
+        for(int i=0; i<5; i++)
+        {
+            fin>>vet_at[i].cognome>>vet_at[i].matricola;
+        }
+   
+    }
+    fin.close();
+}
+
+/*!
+
+\fn leggi_csv
+\brief Richima la funzione di caricamento del vettore e stampa i partecipanti
+\param[in]  vet_at vettore della struct Atleti
  */
 
-void esegui()
+void leggi_csv(Atleti vet_at[])
 {
-    fstream fout("prova",ios::app);
+    carica_vet(vet_at);
+    cout<<"Hai simulato una gara di Kayt-Snowbording dei seguenti atleti \n";
+    for(int i=0; i<5; i++)
+    {
+        cout<<vet_at[i].cognome<<" "<<vet_at[i].matricola<<endl;
+    }
+}
+
+/*!
+
+\fn leggi_csv_aggiornato
+\brief Apre il file "prova.txt" in lettura e lo legge fino alla fine
+\param[in]  vet_at vettore della struct Atleti
+ */
+
+
+void leggi_csv_aggiornato(Atleti vet_at[])
+{
+    cout<<"\nRISULTATI FINALI GARA KAYT-SNOWBORDING "<<endl;
+    ifstream fin("prova.txt",ios::in);
+    string appoggio;
+    while(!fin.eof())
+    {
+        getline(fin,appoggio);
+        cout<<appoggio<<endl;
+   
+    }
+    fin.close();
+}
+/*!
+
+\fn esegui
+\brief Apre il file "prova.txt" in scrittura e inserisce all'interno di esso i dati degli atleti, le coordinate e i km totali, inclusa la classifica finale
+\param[in]  vet_at vettore della struct Atleti
+ */
+
+void esegui(Atleti vet_at[])
+{
+    leggi_csv(vet_at);
+    fstream fout("prova.txt",ios::app);
+    fout<<"RISULTATI FINALI GARA KAYT-SNOWBORDING"<<endl;
     
     srand(time(NULL));
     
@@ -78,35 +142,16 @@ void esegui()
     
     string matricola;
     
-    double distanza[atleta.numero_atleti];
+    double distanza[5];
     
-    cout << "Quanti atleti ci sono in totale? "<<endl;
-    cin>>atleta.numero_atleti;
-    fout<<endl<<endl<<"Numero atleti: "<<atleta.numero_atleti<<endl<<endl;
-   
-    for(int a=0;a<atleta.numero_atleti;a++)
+    for(int a=0;a<5;a++)
     {
         int numero_linee=rand()%26+5;
         int x1,y1,x2,y2,z;
         double km_tot=0;
         Segmento segmenti[numero_linee];
-        for(int aa=0;aa<5;aa++)
-        {
-            int num = rand() % 26; 
-            char carattere = 'a' + num;
-            matricola+=carattere;
-        }
         
-        atleta.matricola = matricola;
-        matricola = " ";
-        fout<<"Matricola: "<<atleta.matricola<<endl;
-        
-        cout <<endl<<a+1<<"° Atleta"<<endl;
-        cout <<"Inserisci cognome atleta: ";
-        cin>>atleta.cognome;
-        fout<<"Cognome: "<<atleta.cognome<<endl;
-        
-        fout<<"Coordinate rilevate in 30 minuti di gara\n";
+        fout<<endl<<vet_at[a].cognome<<" "<<vet_at[a].matricola<<endl;
         atleta.km_tot=0;
        
         for (int i = 0; i < numero_linee; i++) 
@@ -123,8 +168,8 @@ void esegui()
         distanza[a]=atleta.km_tot;
     }
    
-    for (int i = 0; i < atleta.numero_atleti-1; i++) {
-        for (int j = 0; j < atleta.numero_atleti-i-1; j++) {
+    for (int i = 0; i < 5-1; i++) {
+        for (int j = 0; j < 5-i-1; j++) {
             if (distanza[j] > distanza[j+1]) 
             {
               
@@ -137,8 +182,8 @@ void esegui()
     
     fout<<"CLASSIFICA FINALE \n";
     
-    int p=atleta.numero_atleti;
-    for (int i = 0; i < atleta.numero_atleti; i++) 
+    int p=5;
+    for (int i = 0; i < 5; i++) 
     {
        fout<<p<<"° posto: "<<distanza[i]<<"\n";
        p--;
@@ -158,7 +203,7 @@ void esegui()
 
 void pulisci()
 {
-    ofstream file("prova");
+    ofstream file("prova.txt");
     if (file.is_open()) 
     {
         file.clear();
@@ -167,38 +212,19 @@ void pulisci()
     cout<<"File pulito \n ";
 }
 
-/*!
-\fn leggi
- \brief Legge il file 
- */
-
-void leggi()
-{
-     
-    ifstream file("prova");
-     
-    string linea;
-    if (file.is_open()) {
-        while (getline(file, linea)) {
-            cout << linea << endl;
-        }
-        file.close();
-    } else {
-        cout << "Impossibile aprire il file "<<endl;
-    }
-}
 
 /*!
  \fn menu
- \brief Richiama i metodi del programma e offre 4 diverse scelte all'utente 
+ \brief Richiama i metodi del programma e offre 3 diverse scelte all'utente 
  */
 
 void menu()
 {
     int scelta;
+    Atleti vet_at[5];
     do{
         cout<<"\n-----MENU-----\n";
-        cout<<"1)Inserisci dati atleti\n";
+        cout<<"1)Simula gara\n";
         cout<<"2)Leggi file\n";
         cout<<"3)Pulisci file\n";
         cout<<"4)Esci\n";
@@ -207,19 +233,16 @@ void menu()
         switch(scelta)
         {
             case 1:
-            esegui();
+            esegui(vet_at);
             break;
             
             case 2:
-            leggi();
+            leggi_csv_aggiornato(vet_at);
             break;
             
-            case 3:
+            case 3: 
             pulisci();
             break;
-            
-            //default:
-            //pulisci();
             
         }
     }while(scelta!=4);
