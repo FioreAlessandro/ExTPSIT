@@ -1,6 +1,0 @@
-
-fiore 90 
-ardolino 20
-grifa 8
-gatta 6
-lauriola 10
