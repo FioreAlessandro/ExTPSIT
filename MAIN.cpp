@@ -8,7 +8,6 @@
 */
 
 /*!
-
 \file Gara_Kyte-snowborder.cpp
 \brief Programma che simula una gara di Kayt-Snowbording calcolando i km percorsi da ogni atleta e salvando i risultati su file
 \author [Alessandro Fiore]
@@ -24,7 +23,6 @@
 using namespace std;
 
 /**
-
 @struct Segmento
 @brief Definisce una struttura Segmento contenente le coordinate di due punti e la loro lunghezza in km
 */
@@ -35,7 +33,6 @@ struct Segmento {
 };
 
 /**
-
 @struct Atleti
 @brief Definisce una struttura Atleti contenente il numero degli atleti, la loro matricola, il cognome e i km percorsi
 */
@@ -48,7 +45,6 @@ struct Atleti {
 };
 
 /*!
-
 \brief Calcola la lunghezza di un segmento dati i suoi punti
 \param[in] x1 Ascissa del primo punto
 \param[in] y1 Ordinata del primo punto
@@ -63,7 +59,6 @@ double lunghezzaSegmento(double x1, double y1, double x2, double y2)
 }
 
 /*!
-
 \fn carica_vet
 \brief Apre il file in lettura, lo legge fino alla fine e inserisce all'interno di un vettore di struct tutto ciò che legge dal file
 \param[in]  vet_at vettore della struct Atleti
@@ -86,7 +81,6 @@ void carica_vet(Atleti vet_at[])
 }
 
 /*!
-
 \fn leggi_csv
 \brief Richima la funzione di caricamento del vettore e stampa i partecipanti
 \param[in]  vet_at vettore della struct Atleti
@@ -103,7 +97,6 @@ void leggi_csv(Atleti vet_at[])
 }
 
 /*!
-
 \fn leggi_csv_aggiornato
 \brief Apre il file "prova.txt" in lettura e lo legge fino alla fine
 \param[in]  vet_at vettore della struct Atleti
@@ -124,7 +117,6 @@ void leggi_csv_aggiornato(Atleti vet_at[])
     fin.close();
 }
 /*!
-
 \fn esegui
 \brief Apre il file "prova.txt" in scrittura e inserisce all'interno di esso i dati degli atleti, le coordinate e i km totali, inclusa la classifica finale
 \param[in]  vet_at vettore della struct Atleti
@@ -185,9 +177,12 @@ void esegui(Atleti vet_at[])
     int p=5;
     for (int i = 0; i < 5; i++) 
     {
-       fout<<p<<"° posto: "<<distanza[i]<<"\n";
-       p--;
+       if(p==3 || p==2 || p==1)
+       {
+           fout<<p<<"° posto: "<<distanza[i]<<"\n";
+       }
        atleta.km_tot = distanza[i];
+       p--;
     }
     
     fout<<"Il vincitore ha percorso: "<<atleta.km_tot<<"km\n";
@@ -211,7 +206,6 @@ void pulisci()
     }
     cout<<"File pulito \n ";
 }
-
 
 /*!
  \fn menu
@@ -256,4 +250,3 @@ int main()
     
 	return 0;
 }
-
