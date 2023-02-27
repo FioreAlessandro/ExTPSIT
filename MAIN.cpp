@@ -8,7 +8,7 @@
 */
 
 /*!
-\file Gara_Kyte-snowborder.cpp
+\file MAIN.cpp
 \brief Programma che simula una gara di Kayt-Snowbording calcolando i km percorsi da ogni atleta e salvando i risultati su file
 \author [Alessandro Fiore]
 \version 1.0
@@ -59,7 +59,7 @@ double lunghezzaSegmento(double x1, double y1, double x2, double y2)
 }
 
 /*!
-\fn carica_vet
+
 \brief Apre il file in lettura, lo legge fino alla fine e inserisce all'interno di un vettore di struct tutto ciò che legge dal file
 \param[in]  vet_at vettore della struct Atleti
  */
@@ -81,7 +81,7 @@ void carica_vet(Atleti vet_at[])
 }
 
 /*!
-\fn leggi_csv
+
 \brief Richima la funzione di caricamento del vettore e stampa i partecipanti
 \param[in]  vet_at vettore della struct Atleti
  */
@@ -97,7 +97,7 @@ void leggi_csv(Atleti vet_at[])
 }
 
 /*!
-\fn leggi_csv_aggiornato
+
 \brief Apre il file "prova.txt" in lettura e lo legge fino alla fine
 \param[in]  vet_at vettore della struct Atleti
  */
@@ -117,7 +117,7 @@ void leggi_csv_aggiornato(Atleti vet_at[])
     fin.close();
 }
 /*!
-\fn esegui
+
 \brief Apre il file "prova.txt" in scrittura e inserisce all'interno di esso i dati degli atleti, le coordinate e i km totali, inclusa la classifica finale
 \param[in]  vet_at vettore della struct Atleti
  */
@@ -192,7 +192,7 @@ void esegui(Atleti vet_at[])
 }
 
 /*!
-\fn pulisci
+
  \brief Pulisce il file riportandolo allo stato iniziale
  */
 
@@ -208,7 +208,7 @@ void pulisci()
 }
 
 /*!
- \fn menu
+
  \brief Richiama i metodi del programma e offre 3 diverse scelte all'utente 
  */
 
@@ -242,7 +242,7 @@ void menu()
     }while(scelta!=4);
 }
 
-//! \fn main 
+// 
 //! \brief metodo finale in cui viene richiamato solo il menu
 int main()
 {
